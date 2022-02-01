@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pipelines-as-code-scheduler
+  namespace: pipelines-as-code
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: scheduler
+      app.kubernetes.io/component: scheduler
+      app.kubernetes.io/part-of: pipelines-as-code
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: scheduler
+        app.kubernetes.io/component: scheduler
+        app.kubernetes.io/version: "devel"
+        app.kubernetes.io/part-of: pipelines-as-code
+    spec:
+      serviceAccountName: pipelines-as-code-scheduler
+      containers:
+      - name: pipelines-as-code-scheduler
+        image: "ko://github.com/sm43/pac-scheduler/cmd/pipelines-as-code-scheduler"
+        ports:
+        - name: http-server
+          containerPort: 8080
