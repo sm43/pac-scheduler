@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pipelines-as-code-scheduler-roles
+  labels:
+    app.kubernetes.io/instance: default
+    app.kubernetes.io/part-of: pipelines-as-code
+rules:
+  - apiGroups: ["tekton.dev"]
+    resources: ["*"]
+    verbs: ["*"]
